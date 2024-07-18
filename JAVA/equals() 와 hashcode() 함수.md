@@ -8,7 +8,7 @@ public boolean equals(Object obj) {
         return (this == obj);
     }
 ```
-프로그래밍 상에서 같은 값을 갖는 객체에 대해 동등성(equality)을 위해 값을 기준으로 equals() 함수를 오버라이딩한다. 예를 들어 아래와 같이 두 학생(s1,s2) 객체는 같은 id를 갖지만 서로 다른 메모리를 참조하기 때문에 eqauls() 함수는 false를 반환한다.
+프로그래밍 상에서 객체가 갖고 있는 값에 대해  동등성(equality)을 비교하기 위해 equals() 함수를 오버라이딩한다. 아래와 같이 두 학생(s1,s2) 객체는 같은 id를 갖지만 서로 다른 메모리를 참조하기 때문에 eqauls() 함수는 false를 반환한다.
 
 ```
 public class Student{
@@ -113,7 +113,7 @@ public class HashTest {
 - equals() 함수에 따라 두 객체가 동일한 경우 두 객체 각각에 대해 hashCode 메서드를 호출하면 동일한 정수 결과가 나와야 한다. (If two objects are equal according to the equals method, then calling the hashCode method on each of the two objects must produce the same integer result.)
 
 ## JPA 엔티티 선언시 주의할 점
-ORM을 사용하는 경우, equals() 함수와 hashCode() 함수를 오버라이딩할 때 필드 참조를 사용하지 않고 항상 getter을 사용해야 한다. ORM에서는 때때로 필드가 lazy load 되어 getter 메서드가 호출돼야 필드를 사용할 수 있다.
+ORM을 사용하는 경우, equals() 함수와 hashCode() 함수를 오버라이딩할 때 필드 참조를 사용하지 않고 항상 getter을 사용해야 한다. ORM에서는 때때로 필드가 lazy load 되어 getter 메서드가 호출돼야 필드를 사용할 수 있기 때문이다.
 
 ## 참고
 - [Java hashCode() and equals() Methods](https://howtodoinjava.com/java/basics/java-hashcode-equals-methods/)  
