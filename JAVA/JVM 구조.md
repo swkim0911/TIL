@@ -11,8 +11,8 @@
 3. 클래스 로더를 통해 .class 파일들을 JVM으로 로딩한다.
 4. 로딩된 .class 파일들은 Execution Engine을 통해 해석된다.
 5. 해석된 바이트코드는 Runtime Data Areas 에 배치되어 실질적인 수행이 이루어진다. 이러한 실행과정 속에서 JVM은 필요에 따라 Thread Synchronizaion과 GC같은 관리작업을 수행한다.
-   
-<img width="863" alt="image" src="https://github.com/user-attachments/assets/b3093aa0-6a7e-4319-aadd-da7945bce56d">
+
+<p align="center"><img width="500" alt="image" src="https://github.com/user-attachments/assets/b3093aa0-6a7e-4319-aadd-da7945bce56d"></p>
 
 # Class Loader
 클래스 파일을 로드하는데 사용되는 JVM의 하위 시스템이다. 컴파일 타임이 아닌 런타임에 처음으로 클래스를 참조할 때 클래스 파일을 로딩(loading), 링크(linking), 초기화(initialization)한다.
