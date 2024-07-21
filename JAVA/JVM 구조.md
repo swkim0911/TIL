@@ -11,6 +11,8 @@
 3. 클래스 로더를 통해 .class 파일들을 JVM으로 로딩한다.
 4. 로딩된 .class 파일들은 Execution Engine을 통해 해석된다.
 5. 해석된 바이트코드는 Runtime Data Areas 에 배치되어 실질적인 수행이 이루어진다. 이러한 실행과정 속에서 JVM은 필요에 따라 Thread Synchronizaion과 GC같은 관리작업을 수행한다.
+   
+<img width="863" alt="image" src="https://github.com/user-attachments/assets/b3093aa0-6a7e-4319-aadd-da7945bce56d">
 
 # Class Loader
 클래스 파일을 로드하는데 사용되는 JVM의 하위 시스템이다. 컴파일 타임이 아닌 런타임에 처음으로 클래스를 참조할 때 클래스 파일을 로딩(loading), 링크(linking), 초기화(initialization)한다.
@@ -53,9 +55,21 @@ Frame 은 메소드에 대한 정보를 가지고 있는 Local Variable Array, O
 각각의 Thread 별로 메모리를 따로 할당하기 때문에 동시성 문제에서 자유롭다.
 
 ## PC Register
-스레드의 현재 실행 명령의 주소를 저장한다. 각 스레드에는 별도의 PC 레지스터가 있습니다.
-## Native Method Stacks
+각 스레드에는 별도의 PC 레지스터가 있으며 스레드의 현재 실행 명령의 주소를 저장한다. 어떤 시점에서든 각 JVM 스레드는 단일 메서드의 코드, 즉 해당 스레드에 대한 현재 메서드를 실행한다. 해당 메서드가 native 메서드가 아닌 경우, pc 레지스터에는 현재 실행 중인 JVM 명령어의 주소가 포함된다. native 메서드가 실행되고 있는 경우, pc 레지스터의 값은 정의되지 않는다. 
 
+## Native Method Stacks
+모든 스레드에 대해 별도의 네이티브 스택이 생성된다. 네이티브 메소드 정보를 저장한다. Stack 영역과 비슷하게 Native Method 가 실행될 경우 Stack 에 해당 메서드가 쌓이게 된다.
+- 네이티브 메서드: Java 프로그래밍 언어 이외의 언어로 작성된 메서드
+
+# 실행 엔진(Runtime Engine)
+런타임 데이터 영역에 할당된 바이트코드는 실행 엔진에 의해 실행된다. 실행 엔진은 바이트코드를 한 줄씩 읽고 실행한다. 크게 세 부분으로 구분된다.
+- 인터프리터: 바이트코드를 한 줄씩 해석한 다음 실행한다. 여기서 단점은 하나의 메서드를 여러 번 호출할 때마다 해석이 필요하다는 점이다.
+- JIT 컴파일러: 인터프리터의 효율성을 높이기 위해 사용된다. 자바 바이트코드를 네이티브 코드(기계어)로 컴파일하여 실행속도를 향상시킵니다. 프로그램의 실행 흐름을 분석하여 빈번하게 수행되는 코드 블록을 네이티브 코드로 변환하고 캐싱하여 재사용한다. 이를 통해 인터프리터보다 빠른 실행 속도를 보장한다.
+- Garabage Collector: 프로그램이 동적으로 할당한 메모리 중에서 더 이상 사용하지 않는 메모리를 해제하는 기능을 한다. 
+
+# Java Native Interface(JNI)
+자바 애플리케이션에서 C, C++, 어셈블리어로 작성된 함수를 사용할 수 있는 방법을 제공한다. 
+- native 키워드를 사용한 메소드
 
 # 참고
 - [How JVM Works – JVM Architecture?](https://www.geeksforgeeks.org/jvm-works-jvm-architecture/)
