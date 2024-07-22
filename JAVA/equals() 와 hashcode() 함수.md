@@ -118,4 +118,4 @@ ORM을 사용하는 경우, equals() 함수와 hashCode() 함수를 오버라이
 ## 참고
 - [Java hashCode() and equals() Methods](https://howtodoinjava.com/java/basics/java-hashcode-equals-methods/)  
  
-- [hashCode() description](hhttps://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html)  
+- [Java 17 API Docs](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode())
