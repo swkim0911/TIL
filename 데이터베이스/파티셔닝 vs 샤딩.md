@@ -1,0 +1,67 @@
+# 파티셔닝 vs 샤딩
+데이터베이스에 데이터가 지속적으로 증가한다고 가정하자. 지속적으로 데이터가 증가한다면 쿼리 최적화나 인덱스 튜닝은 일정 수준에서만 개선이 될 가능성이 높다. 그래서 성능 문제를 위해 근본적인 구조를 개선해야 하는데 이때 샤딩과 파티셔닝 방법이 사용될 수 있다. 두 방법 모두 대규모 데이터 세트를 더 작은 하위 세트로 분할하는 방법이지만 차이점이 있다.
+
+# 파티셔닝
+파티셔닝은 매우 큰 테이블을 여러 개의 작은 테이블(파티션)로 나누는 작업이다.
+
+## 파티셔닝 이점
+- 성능(부하 분산): full scan에서 데이터 접근의 범위를 줄여 성능을 높일 수 있다.
+
+- 가용성: 데이터가 여러 데이터 노드에 분산되어 있으므로 노드 중 하나가 갑자기 작동 중단되어 복구 불가능해지더라도 전체 데이터가 손실되는 것이 아니라 일부 데이터만 손실된다.
+
+## 파티셔닝 종류
+
+### 수직 파티셔닝
+
+<p align="center"><img width="400" alt="수직 partitioning" src="https://github.com/user-attachments/assets/91355d26-ae31-4541-87a0-a627ca7e4b8f"></p>
+테이블의 칼럼이 여러 파티션으로 나뉘며 각 파티션에는 테이블의 칼럼이 하나 이상 포함된다. 이러한 접근 방식은 일부 칼럼이 다른 칼럼보다 더 자주 액세스되는 경우에 유용하다. 수직 파티셔닝의 단점 중 하나는 쿼리가 여러 파티션에 걸쳐 있어야 하는 경우, 해당 파티션의 결과를 결합하는 것이 느리거나 복잡할 수 있다.
+
+
+<p align="center"><img width="400" alt="수평 partitioning" src="https://github.com/user-attachments/assets/89fd7e95-51e6-4be1-bd5e-f1d15498a9d4"></p>
+### 수평 파티셔닝
+반면, 수평 파티셔닝은 파티션 키를 기준으로 테이블을 행으로 분할하여 작동합니다. 이 접근 방식에서 테이블의 각 행은 몇 가지 기준에 따라 파티션에 할당된다.
+
+- Range-based partitioning: 범위 기반 검색을 돕기 위해 데이터를 특정 시간 간격(예: 주별, 월별)으로 분할할 수 있다.
+
+- List-based partitioning: 데이터가 일반적으로 특정 열의 개별적인 값 집합을 기준으로 분할됩니다. 예를 들어, 아시아 태평양 지역과 같은 지리적 지역으로 분할할 수 있다.
+
+- Hash-based partitioning: 데이터는 해싱 알고리즘에 의해 분할된다. 해시 기반 분할은 하나 이상의 열에 해시 함수를 적용하여 요청을 보낼 파티션을 결정한다. 예를 들어, IP 주소에 복잡한 암호화 해싱 함수를 사용하여 데이터를 분할할 수 있다.
+
+- Composite partitioning: 앞서 언급된 방법 중 어떤 것이든 결합될 수 있다.
+
+수평 파티셔닝에서 주의해야 할 한 가지는 성능이 데이터가 파티션 전체에 얼마나 고르게 분포되어 있는지에 크게 좌우된다. 데이터 분포가 왜곡되어 있으면 레코드가 가장 많은 파티션이 병목 현상이 일어난다.
+
+# 샤딩
+샤딩은 동일한 스키마를 가지고 있는 여러대의 데이터베이스 서버들에 데이터를 작은 단위로 나누어 분산 저장하는 기법이다. 이때, 작은 단위를 샤드(shard)라고 부른다. 모든 분산된 테이블에는 정확히 하나의 샤드 키가 있다. 샤드 키는 데이터를 어떤 기준으로 나눌지를 결정하는 특정 칼럼(칼럼 조합)입니다.
+
+샤딩은 수평 파티셔닝의 일종이다. 차이점은 파티셔닝은 모든 데이터를 동일한 컴퓨터에 저장하지만 샤딩은 데이터를 서로 다른 컴퓨터(노드)에 분산한다는 점이다. **물리적으로 서로 다른 컴퓨터에 데이터를 저장하므로, 쿼리 성능 향상과 더불어 부하가 분산되는 효과까지 얻을 수 있다**. 즉, 샤딩은 데이터베이스 차원의 수평 확장(scale-out)인 셈이다.
+
+## 샤딩 종류
+### Modula sharding
+<p align="center"><img width="270" alt="modula sharding" src="https://github.com/user-attachments/assets/0f74ee81-a5aa-4e89-a04b-dc1fa9da6c39"></p>
+모듈러 샤딩은 PK를 모듈러 연산한 결과로 DB를 특정하는 방식이다. 장단점은 아래와 같다.
+
+- 장점: 레인지샤딩에 비해 데이터가 균일하게 분산된다.
+
+- 단점: DB를 추가 증설하는 과정에서 이미 적재된 데이터의 재정렬이 필요하다.
+  
+모듈러샤딩은 데이터량이 일정 수준에서 유지될 것으로 예상되는 데이터 성격을 가진 곳에 적용할 때 어울리는 방식이다. 물론 데이터가 꾸준히 늘어날 수 있는 경우라도 적재속도가 그리 빠르지 않다면 모듈러방식을 통해 분산처리하는 것도 고려해볼 법 하다.
+
+
+<p align="center"><img width="270" alt="range sharding" src="https://github.com/user-attachments/assets/b3a111a0-faa0-46d7-9110-9e5afe7c41de"></p>
+레인지 샤딩은 PK의 범위를 기준으로 DB를 특정하는 방식이다. 장단점은 아래와 같다.
+
+- 장점: 모듈러 샤딩에 비해 기본적으로 증설에 재정렬 비용이 들지 않는다.
+
+- 단점: 일부 DB에 데이터가 몰릴 수 있다.
+
+> 그림의 Router는 분산된 DB에 접근하기 위한 논리적인 작업을 담당한다.
+
+
+# 참고
+- [What is Database Partioning](https://questdb.io/glossary/database-partitioning/)
+- [데이터베이스 샤딩이란 무엇인가요?](https://aws.amazon.com/ko/what-is/database-sharding/)
+- [Database Sharding vs. Partitioning: What’s the Difference?](https://www.singlestore.com/blog/database-sharding-vs-partitioning-whats-the-difference/)
+- [What is Data Partitioning and it matters at scale](https://arpitbhayani.me/blogs/data-partitioning/)
+- [DB분산처리를 위한 sharding](https://techblog.woowahan.com/2687/)
+- [데이터베이스 파티셔닝과 샤딩](https://hudi.blog/db-partitioning-and-sharding/)
