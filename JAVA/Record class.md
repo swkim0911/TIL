@@ -120,13 +120,13 @@ public record Rectangle(double length, double width) {
 <p align="center">
 <img width="537" height="139" alt="Image" src="https://github.com/user-attachments/assets/07e92f7b-84d5-4d51-b74b-27e4ce4c6fb6" /></p>
 
-이 jackson 라이브러리를 통해 직렬화/역직렬화를 수행하는데, 역직렬화할 때 jackson 라이브러리는 기본적으로 기본 생성자를 호출하고, setter 메서드를 통해 필드를 입력한다.
+이 jackson 라이브러리를 사용해 직렬화/역직렬화를 수행할 때, 일반적인 클래스의 경우 역직렬화 과정에서 **기본 생성자**를 호출한 뒤 **setter 메서드**(없으면 리플렉션)로 필드를 채운다.
 
-하지만 레코드 클래스는 기본적으로 final 필드를 다루기 때문에, setter 메서드로 나중에 변수를 할당할 수 없다.
+하지만 레코드 클래스는 모든 필드가 `final`이며 setter를 제공하지 않으므로, 기존 방식대로는 역직렬화가 불가능하다.
 
-이 문제를 해결하기 위해, [jackson 라이브러리 2.12 버전](https://cowtowncoder.medium.com/jackson-2-12-features-eee9456fec75) 부터 레코드 클래스의 직렬화/역직렬화를 지원한다. 이 버전 이후에 역직렬화 할 때는 내부적으로 레코드 클래스의 정식 생성자(canonical constructor)를 사용한다.
+이 문제를 해결하기 위해 [Jackson 2.12](https://cowtowncoder.medium.com/jackson-2-12-features-eee9456fec75) 버전부터 record 클래스의 직렬화·역직렬화를 공식 지원한다.** 이때 Jackson은 역직렬화 과정에서 **record의 canonical constructor(모든 필드를 받는 생성자)** 를 호출하여 객체를 생성한다.
 
-결론은 레코드 클래스를 프로젝트의 도입하기 전에 직렬화/역직렬화 라이브러리(jackson, gson 등)의 현재 버전이 레코드 클래스를 지원하는지 정확히 확인하고 사용해야 한다.
+따라서 record를 프로젝트에 도입하기 전에 사용하는 직렬화/역직렬화 라이브러리(Jackson, Gson 등)의 **버전이 record를 지원하는지 반드시 확인**해야 한다.
 
 ### 참고
 
