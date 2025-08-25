@@ -117,7 +117,8 @@ public record Rectangle(double length, double width) {
 레코드 클래스를 DTO에 사용한다면, 직렬화/역직렬화 과정에 주의할 점이 있다.
 
 보통 Spring framework로 웹 프로젝트를 만든다면 **jackson 라이브러리**가 자동으로 포함된다.
-<img width="537" height="139" alt="Image" src="https://github.com/user-attachments/assets/07e92f7b-84d5-4d51-b74b-27e4ce4c6fb6" />
+<p align="center">
+<img width="537" height="139" alt="Image" src="https://github.com/user-attachments/assets/07e92f7b-84d5-4d51-b74b-27e4ce4c6fb6" /></p>
 
 이 jackson 라이브러리를 통해 직렬화/역직렬화를 수행하는데, 역직렬화할 때 jackson 라이브러리는 기본적으로 기본 생성자를 호출하고, setter 메서드를 통해 필드를 입력한다.
 
