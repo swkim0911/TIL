@@ -112,6 +112,21 @@ public record Rectangle(double length, double width) {
 
 하이버네이트와 같은 ORM은 인자 없는 생성자와 변경 가능한 필드에 의존한다. 레코드에서는 이를 허용하지 않으므로 JPA 엔티티와 함께 직접 사용하는 것은 권장되지 않는다.
 
+## 주의할 점
+
+레코드 클래스를 DTO에 사용한다면, 직렬화/역직렬화 과정에 주의할 점이 있다.
+
+보통 Spring framework로 웹 프로젝트를 만든다면 **jackson 라이브러리**가 자동으로 포함된다.
+<img width="537" height="139" alt="Image" src="https://github.com/user-attachments/assets/07e92f7b-84d5-4d51-b74b-27e4ce4c6fb6" />
+
+이 jackson 라이브러리를 통해 직렬화/역직렬화를 수행하는데, 역직렬화할 때 jackson 라이브러리는 기본적으로 기본 생성자를 호출하고, setter 메서드를 통해 필드를 입력한다.
+
+하지만 레코드 클래스는 기본적으로 final 필드를 다루기 때문에, setter 메서드로 나중에 변수를 할당할 수 없다.
+
+이 문제를 해결하기 위해, [jackson 라이브러리 2.12 버전](https://cowtowncoder.medium.com/jackson-2-12-features-eee9456fec75) 부터 레코드 클래스의 직렬화/역직렬화를 지원한다. 이 버전 이후에 역직렬화 할 때는 내부적으로 레코드 클래스의 정식 생성자(canonical constructor)를 사용한다.
+
+결론은 레코드 클래스를 프로젝트의 도입하기 전에 직렬화/역직렬화 라이브러리(jackson, gson 등)의 현재 버전이 레코드 클래스를 지원하는지 정확히 확인하고 사용해야 한다.
+
 ### 참고
 
 - https://docs.oracle.com/en/java/javase/17/language/records.html
