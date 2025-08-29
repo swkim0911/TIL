@@ -29,7 +29,7 @@
 최소 힙을 사용하는 방법도 있지만 시간 복잡도는 동일하며 k 개의 chunk 사이즈가 일정하지 않은 경우 유용하다.
 
 
-# 참고
+### 참고
 - [External Sorting - geeksforgeeks](https://www.geeksforgeeks.org/external-sorting/)
 - [External Sorting - wikipedia](https://en.wikipedia.org/wiki/External_sorting)
 - [k-way merge algorithm - wikipedia](https://en.wikipedia.org/wiki/K-way_merge_algorithm)

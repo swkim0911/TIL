@@ -73,7 +73,7 @@ public static int newLength(int oldLength, int minGrowth, int prefGrowth) {
 - 특정 값을 찾기 위해서는 해당 연결리스트 내부의 원소를 모두 다 뒤져야 하므로 검색에 대한 시간 복잡도는 O(N) 이 소요된다.
     - Java 에서는 LinkedList 자료구조가 이중 연결 리스트로 구현되어있어 원소를 찾는 작업은 지정된 인덱스에 가까운 처음 또는 끝에서 list를 검색한다.
 
-## 참고
+### 참고
 
 - [https://hoons-dev.tistory.com/99#%F-%-F%--%A-%----%--LinkedList%---�%--%B-�%B-%B-�%A-��%-A%A-�%-A%B--](https://hoons-dev.tistory.com/99#%25F-%25-F%25--%25A-%25----%25--LinkedList%25---%EC%25--%25B-%EA%25B-%25B-%EB%25A-%AC%EC%25-A%25A-%ED%25-A%25B--)
 - https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html

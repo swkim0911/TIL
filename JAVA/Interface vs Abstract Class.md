@@ -27,7 +27,7 @@ Java의 핵심 개념 중 하나이며 추상화, 다형성 및 다중 상속을
 |  상속  |                             다중 상속 가능                             |               단일 상속만 가능               |
 
 
-## 참고
+### 참고
 - [Java Interface](https://www.baeldung.com/java-interfaces)
 - [[Java] 인터페이스 - 인터페이스의 요소들](https://velog.io/@foeverna/Java-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%9D%98-%EC%9A%94%EC%86%8C%EB%93%A4)
 - [Interface (Java)](https://en.wikipedia.org/wiki/Interface_(Java))

@@ -38,7 +38,7 @@ final 키워드는 변수, 메소드, 클래스에 대한 변경을 금지한다
 # static 과 final 키워드
 static final로 선언된 변수는 클래스의 상수로서, 모든 인스턴스에서 공유되며 변경할 수 없는 값이 된다. 이는 프로그램 전체에서 일관된 값을 유지해야 할 때 유용하다.
 
-# 참고
+### 참고
 - [자바의 static과 final 키워드 깊게 이해하기](https://f-lab.kr/insight/understanding-java-static-final?gad_source=1&gclid=CjwKCAjw4_K0BhBsEiwAfVVZ__f5ihZl4xzrcs-_1u74xRCzwDF8M7ddwqFCZ_FRmT_7vudmEkHDHhoC2Y0QAvD_BwE)
 - [static변수와 static 메서드](https://mangkyu.tistory.com/47)
 - [Understanding storage of static methods and static variables in Java](https://www.geeksforgeeks.org/java/understanding-storage-of-static-methods-and-static-variables-in-java)

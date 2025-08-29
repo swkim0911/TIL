@@ -163,7 +163,7 @@ Frame 은 메소드에 대한 정보를 가지고 있는 Local Variable Array, O
 자바 애플리케이션에서 C, C++, 어셈블리어로 작성된 함수를 사용할 수 있는 방법을 제공한다. 
 - native 키워드를 사용한 메소드
 
-# 참고
+### 참고
 - [How JVM Works – JVM Architecture?](https://www.geeksforgeeks.org/jvm-works-jvm-architecture/)
 - [The JVM Architecture Explained](https://dzone.com/articles/jvm-architecture-explained)
 - [JVM(Java Virtual Machine)이란 무엇인가?](https://asfirstalways.tistory.com/158)

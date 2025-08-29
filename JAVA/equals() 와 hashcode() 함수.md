@@ -142,7 +142,7 @@ ORM을 사용할 때는 hashCode()와 equals()에서 항상 **getter 메서드�
 
 반면에, e1.getPhoneNumber() == e2.getPhoneNumber()를 사용하면, 지연 로딩이라도 getter 호출시 ORM이 값을 채우기 때문에 올바르게 비교가 가능하다.
 
-## 참고
+### 참고
 
 - [Java hashCode() and equals() Methods](https://howtodoinjava.com/java/basics/java-hashcode-equals-methods/)
 - [Java 17 API Docs](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode())
