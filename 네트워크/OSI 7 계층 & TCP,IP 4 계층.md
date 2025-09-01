@@ -79,4 +79,6 @@ TCP/IP 모델에서 데이터 흐름은 송신 측에서 응용 계층 데이터
 
 - [What is the OSI Model?](https://www.ibm.com/kr-ko/think/topics/osi-model)
 
+- https://mysterlee.tistory.com/40
+
 - chatGPT
