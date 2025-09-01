@@ -1,0 +1,1 @@
+직렬화/역직렬화 내부 동작 (with record class)

@@ -31,7 +31,7 @@ public record Rectangle(double length, double){}
 
 ### 생성자
 
-레코드 클래스의 정식 생성자(canonical constructor)를 명시적으로 선언하면 아래와 같다.
+레코드 클래스의 정식 생성자(canonical constructor)를 아래와 같이 명시적으로 선언할 수 있다.
 
 ```java
 public record Rectangle(double length, double width){
@@ -116,21 +116,27 @@ public record Rectangle(double length, double width) {
 
 레코드 클래스를 DTO에 사용한다면, 직렬화/역직렬화 과정에 주의할 점이 있다.
 
-보통 Spring framework로 웹 프로젝트를 만든다면 **jackson 라이브러리**가 자동으로 포함된다.
+Spring Framework 기반 웹 프로젝트에서는 보통 **Jackson 라이브러리**가 기본적으로 포함되어 있으며, 이를 통해 객체의 직렬화/역직렬화가 처리된다.
+
 <p align="center">
 <img width="537" height="139" alt="Image" src="https://github.com/user-attachments/assets/07e92f7b-84d5-4d51-b74b-27e4ce4c6fb6" /></p>
 
-이 jackson 라이브러리를 사용해 직렬화/역직렬화를 수행할 때, 일반적인 클래스의 경우 역직렬화 과정에서 **기본 생성자**를 호출한 뒤 **setter 메서드**(없으면 리플렉션)로 필드를 채운다.
+Jackson은 객체를 만들 때 사용 가능한 생성자를 우선적으로 탐색한다. 우선순위는 @JsonCreator가 붙은 생성자, 매개변수 이름이 JSON 키와 일치하는 생성자, 마지막으로 기본 생성자이다. 이후에는 남은 필드를 setter나 리플렉션을 통해 채운다.
 
-하지만 레코드 클래스는 모든 필드가 `final`이며 setter를 제공하지 않으므로, 기존 방식대로는 역직렬화가 불가능하다.
+문제는 record의 경우 모든 필드가 final이고 setter가 없다는 점이다. 구버전 Jackson(2.12 미만)은 record를 일반 클래스처럼 취급했기 때문에, canonical constructor(모든 필드를 받는 생성자)를 자동으로 인식하지 못해 역직렬화가 실패할 수 있었다.
 
-이 문제를 해결하기 위해 [Jackson 2.12](https://cowtowncoder.medium.com/jackson-2-12-features-eee9456fec75) 버전부터 record 클래스의 직렬화·역직렬화를 공식 지원한다.** 이때 Jackson은 역직렬화 과정에서 **record의 canonical constructor(모든 필드를 받는 생성자)** 를 호출하여 객체를 생성한다.
+이 문제를 해결하기 위해 [Jackson 2.12](https://cowtowncoder.medium.com/jackson-2-12-features-eee9456fec75) 버전부터는 record 타입을 공식 지원하며, 역직렬화 시 canonical constructor를 호출해 객체를 생성한다. 
 
-따라서 record를 프로젝트에 도입하기 전에 사용하는 직렬화/역직렬화 라이브러리(Jackson, Gson 등)의 **버전이 record를 지원하는지 반드시 확인**해야 한다.
+**따라서 프로젝트에 레코드를 도입하기 전에, 사용하는 직렬화/역직렬화 라이브러리(Jackson, Gson 등)가 레코드를 지원하는 버전인지 반드시 확인해야 한다.**
 
 ### 참고
 
 - https://docs.oracle.com/en/java/javase/17/language/records.html
+
 - https://www.gaurgaurav.com/2024_advancedJava_exploringRecordClasses
+
 - https://www.javacodegeeks.com/2025/07/java-record-classes-best-practices-and-real-world-use-cases.html
+
 - https://jangjjolkit.tistory.com/69
+
+- chatGPT
