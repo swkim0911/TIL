@@ -3,8 +3,6 @@ CPython은 Python 프로그래밍 언어의 공식 구현체(Python 런타임)�
 
 CPython 외에도 PyPy, Cython, Jython 등 다른 구현체가 있으며 python.org에서 Python 배포판을 설치하면 CPython이 실행된다. CPython은 "공식 구현체"이기 때문에 다른 파이썬 구현체가 따라야 하는 언어 명세(language specification)까지 포함하고 있다.
 
-언어 명세란, 언어의 문법과 의미를 규정한 공식 문서로, 모든 구현체가 따라야 하는 기준이다. 예컨대 JavaScript는 ECMAScript 사양이 있고, Java는 JLS(Java Language Specification)가 있다. Python은 별도의 국제 표준은 없지만, 공식 문서인 Python Language Reference와 함께 CPython의 동작이 사실상 언어 명세의 역할을 한다.
-
 Python 언어 명세는 Python 언어에 대한 설명을 담은 문서이다. 예를 들어, assert는 예약어이고, []는 인덱싱, 슬라이싱, 빈 리스트 생성에 사용된다고 명시되어 있다.
 
 > 언어 명세란 언어의 문법과 의미를 규정한 공식 문서로, 모든 구현체가 따라야 한다. Java에는 JLS(Java Language Specification)이 있고, JS는 ECMAScript 사양이 있다. Python은 별도의 국제 표준은 없지만, 공식 문서인 Python Language Reference와 함께 CPython의 동작이 사실상 언어 명세 역할을 한다.
@@ -18,7 +16,13 @@ Python 언어 명세는 Python 언어에 대한 설명을 담은 문서이다. �
 
 - Numpy, TensorFlow 같은 라이브러리는 CPython에 의존한다.
 
+#### 컴파일러
+- Python 코드를 인터프리터하기 전에 바이트코드로 컴파일(.pyc)하므로 인터프리터와 컴파일러로 구분할 수 있다.
+  - Python은 네이티브 코드가 아니라 인터프리터 위에서 실행되기 때문에 느리다.
+
 #### GIL (Global Interpreter Lock)
+- CPython 인터프리터가 동시에 여러 스레드가 실행될 때, 한 번에 하나의 스레드만 Python 바이트코드를 실행하도록 강제하는 락이다.
+  - 컴퓨터에 코어가 여러 개여도 동시에 바이트코드를 실행하는 건 1개 스레드뿐이다.
 
 
 ### 참고
