@@ -42,7 +42,9 @@ CPython에서 CPU-bound 작업의 실행 시간에 이점을 얻기 위해 멀�
 여기서 주의할 점은 GIL이 하나의 스레드만 실행된다는 것이 하나의 스레드가 CPU를 계속 점유한다는 뜻이 아닌 "한 시점에" 하나의 스레드가 실행된다는 뜻이다. 즉, 인터프리터는 주기적으로 "check"(타임슬라이스 단위의 GIL 해제 시점)를 실행해서 동시성은 확보한다.
 
 <p align="center"><img style="width:50%; height:auto;" alt="Image" src="https://github.com/user-attachments/assets/f04e95a1-d35f-4f71-9c86-eca113ebf6e1" /></p>
-
+<p align="center">
+  <sub>https://www.dabeaz.com/python/GIL.pdf</sub>
+</p>
 
 
 ### I/O-bound
@@ -51,7 +53,9 @@ I/O-bound 작업은 I/O 작업이 길거나 빈번하여 CPU 버스트가 짧게
 I/O-bound 작업을 멀티 스레드 환경에서 실행한다면 GIL의 제약을 크게 받지 않는다. 이유는, 실행 상태의 스레드가 I/O 작업을 하기 위해 blocking 상태가 되면서 GIL를 릴리즈 하기 때문이다. 그렇게 되면 다른 스레드는 GIL를 획득하여 곧바로 자신의 작업을 수행하므로, 멀티 스레드 환경에서 동시성을 확보해 효율적으로 동작될 수 있다.
 
 <p align="center"><img style="width:50%; height:auto;" alt="Image" src="https://github.com/user-attachments/assets/ae797a74-dcd1-44a4-9765-afe94ca8ed82" /></p>
-
+<p align="center">
+  <sub>https://www.dabeaz.com/python/GIL.pdf</sub>
+</p>
 
 
 
