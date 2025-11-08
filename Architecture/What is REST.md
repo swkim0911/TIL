@@ -7,7 +7,7 @@ REST는 제약조건들을 분산 하이퍼미디어 시스템(Distributed Hyper
 
 > REST 아키텍처 스타일을 준수하는 웹 API를 REST API(혹은 RESTful API)라고 한다.
 
-## REST의 6가지 기본 제약조건(운칙)
+## REST의 6가지 기본 제약조건(원칙)
 REST는 설계에서 확장성, 무상태성, 단순성(simplicity)을 촉진하는 6가지 제약조건이 있다.
 
 ### Uniform Interface(일관된 인터페이스)
