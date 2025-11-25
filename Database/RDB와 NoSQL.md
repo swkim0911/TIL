@@ -26,9 +26,7 @@ NoSQL이란 "Not only SQL"의 줄임말로, 관계형 데이터베이스처럼 �
   - 비정형 데이터: 텍스트 문서, 이미지 등
   
 - 수직 확장으로 용량을 추가하는 대신 수평적으로 확장한다.
-- 
 - 특정 데이터 모델 및 작업 패턴에 최적화 되어 있다.
-- 
 - 엄격한 ACID 속성을 따르기 보다는 Eventual Consistency Model과 같이 지연된 일관성(consistency) 제공한다.
 
 ### pros & cons 
@@ -49,9 +47,6 @@ NoSQL이란 "Not only SQL"의 줄임말로, 관계형 데이터베이스처럼 �
 
 ### 참고
 - [What is a Relational Database](https://cloud.google.com/learn/what-is-a-relational-database?hl=en)
-
 - [What is NoSQL](https://cloud.google.com/discover/what-is-nosql?hl=en)
-
 - [What is Data Integrity](https://www.ibm.com/think/topics/data-integrity)
-
 - ChatGPT
