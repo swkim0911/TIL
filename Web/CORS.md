@@ -7,8 +7,8 @@
 
 브라우저에서 CORS 에러가 발생한다는 것은, SOP 때문에 cross-origin 응답의 읽기가 기본적으로 차단되었는데, 서버가 CORS 헤더로 이를 허용하지 않은 상태라는 뜻이다.
 
-정리하면 **CORS는 SOP로 인해 기본적으로 차단되는 cross-origin 응답 접근을 서버가 명시적으로 허용할 수 있도록 해주는 HTTP 헤더 기반 메커니즘이다.
-**
+정리하면 **CORS는 SOP로 인해 기본적으로 차단되는 cross-origin 응답 접근을 서버가 명시적으로 허용할 수 있도록 해주는 HTTP 헤더 기반 메커니즘이다.**
+
 ### cross origin
 origin은 `scheme(프로토콜) + domain(도메인) + port(포트 번호)`을 말한다. 그래서 cross-origin은 다음 중 한 가지라도 다른 경우를 말한다.
 
@@ -19,7 +19,7 @@ origin은 `scheme(프로토콜) + domain(도메인) + port(포트 번호)`을 �
 3. 포트 번호 - 80, 8080 포트는 다르다.
 
 ## CORS 기본 동작
-1. 브라우저에서 `fetch()`나 `XMLHttpRequest`와 같이 HTTP 요청을 보낼 때 브라우저는 요청에 `origin`헤더를 추가해서 자신의 origin을 담아 보낸다.
+1. 브라우저에서 `fetch()`나 `XMLHttpRequest`와 같이 HTTP 요청을 보낼 때 브라우저는 요청에 `origin`헤더를 추가해서 자신의 `origin`을 담아 보낸다.
   
 2. 서버는 응답 헤더에 `Access-Control-Allow-Origin`에 서버 자신의 리소스에 접근할 수 있는 origin을 담아 보낸다.
   
@@ -54,16 +54,20 @@ HTTP 메서드가 다음 중 하나이면서
 
 ### Preflighted requests인 경우
 브라우저에서 Simple requests 조건을 만족하지 않는 요청을 보내는 경우,
-1. 먼저 본(원래) 요청을 보내기 전에 헤더에 `origins` 뿐만 아니라 `Access-Control-Request-Method` 헤더에 본 요청 HTTP 메서드와 `Access-Control-Request-Headers` 헤더에 본 요청시 사용된(추가된) 헤더를 포함해서 `OPTIONS` 메서드로 서버로 요청을 보낸다.
+1. 먼저 본(원래) 요청을 보내기 전에 헤더에 `Origin` 뿐만 아니라 `Access-Control-Request-Method` 헤더에 본 요청 HTTP 메서드와 `Access-Control-Request-Headers` 헤더에 본 요청시 사용된(추가된) 헤더를 포함해서 `OPTIONS` 메서드로 서버로 요청을 보낸다.
   
-2. 서버에서는 서버에 설정된 CORS 설정을 바탕으로 `Access-Control-Request-Method` 헤더와 `Access-Control-Request-Headers` 헤더를 포함해서 보낸다. 브라우저는 이 응답 헤더를 보고 유효한 요청인지 확인한다. 유효하지 않다면 요청은 중단되고 에러가 발생하며, 만약 유효하다면 본 요청을 서버에게 보내서 리소스를 응답받는다.
+2. 서버에서는 서버에 설정된 CORS 설정을 바탕으로 `Access-Control-Allow-Origin` 헤더뿐만 아니라 `Access-Control-Allow-Method` 헤더와 `Access-Control-Allow-Headers` 헤더를 포함해서 보낸다. 브라우저는 이 응답 헤더를 보고 유효한 요청인지 확인한다. 유효하지 않다면 요청은 중단되고 에러가 발생하며, 만약 유효하다면 본 요청을 서버에게 보내서 리소스를 응답받는다.
 
 #### Preflighted requests란?
-Simeple requests와 달리 "preflighted" requests인 경우 브라우저는 실제 요청을 전송하기에 요청이 서버에게 안전한지 확인하기 위해 먼저 `OPTIONS` 메서드를 사용해서 cross-origin의 리소스에 HTTP 요청을 보낸다. 즉, preflighted 요청은 "서버가 교차 출처 요청을 처리할 준비가 돼 있는지" 먼저 붇는 방식으로, 서버가 **명시적으로** 허용했다면 실제 요청을 보내라고 브라우저가 결정하게 해주는 장치이다.
+Simeple requests와 달리 "preflighted" requests인 경우 브라우저는 실제 요청을 전송하기 전에 먼저 `OPTIONS` 메서드를 사용해서 preflight 요청을 보낸다. 이 preflight 요청의 목적은 "클라이언트 origin에서 보내는 특정 메서드와 헤더를 포함한 cross-origin 요청을 명시적으로 허용하는지" 확인하는 것이다.
+
+서버가 `Access-Control-Allow-*` 헤더로 이를 명시적으로 허용하면 브라우저는 그제서야 본 요청을 전송한다.
+만약 허용하지 않으면 본 요청은 아예 전송되지 않는다.
+
 
 Spring의 CORS 설정 코드를 예로 들자면,
 
-`allowedHeaders("Authorization", "Content-Type")` 이렇게 되어 있을 때, "Authorization"은 브라우저의 custom 헤더이며 이 헤더 요청을 서버에서는 명시적으로 허용하게 설정하는 것이며, "Content-Type"은 CORS에서 공식적으로 허용한 type 외에 `application/json` 과 같은 type을 명시적으로 허용하게 설정한 것이다.
+`allowedHeaders("Authorization", "Content-Type")` 이렇게 되어 있을 때, `Authorization` 헤더는 브라우저가 기본적으로 허용하지 않는 커스텀 헤더이므로 서버가 명시해야 한다. `Content-Type` 헤더는 Simple Request에서 허용되는 3가지 타입이 아니라면 (application/json 등), 브라우저는 이를 커스텀 헤더로 간주하여 preflight를 발생시키고, 서버는 이를 `Access-Control-Allow-Headers`에 명시적으로 포함해 허용해야 한다.
 
 ### 출처
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
