@@ -121,7 +121,7 @@ Spring Framework 기반 웹 프로젝트에서는 보통 **Jackson 라이브러�
 <p align="center">
 <img width="537" height="139" alt="Image" src="https://github.com/user-attachments/assets/07e92f7b-84d5-4d51-b74b-27e4ce4c6fb6" /></p>
 
-Jackson은 객체를 만들 때 사용 가능한 생성자를 우선적으로 탐색한다. 우선순위는 @JsonCreator가 붙은 생성자, 매개변수 이름이 JSON 키와 일치하는 생성자, 마지막으로 기본 생성자이다. 이후에는 남은 필드를 setter나 리플렉션을 통해 채운다.
+Jackson은 객체를 만들 때 사용 가능한 생성자를 우선적으로 탐색한다. 우선순위는 @JsonCreator가 붙은 생성자, 매개변수 이름이 JSON 키(key)와 일치하는 생성자, 마지막으로 기본 생성자이다. 이후에는 남은 필드를 setter나 리플렉션을 통해 채운다.
 
 문제는 record의 경우 모든 필드가 final이고 setter가 없다는 점이다. 구버전 Jackson(2.12 미만)은 record를 일반 클래스처럼 취급했기 때문에, canonical constructor(모든 필드를 받는 생성자)를 자동으로 인식하지 못해 역직렬화가 실패할 수 있었다.
 
