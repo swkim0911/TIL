@@ -23,7 +23,7 @@ public class Student{
 }
 ```
 
-그리고 아래와 같이 두 학생(s1,s2) 객체를 선언해서 같은 id를 설정했을 때를 보면, 서로 같은 id를 갖지만 결국 서로 다른 메모리를 참조하기 때문에 eqauls() 함수의 기본 구현에 의해 false를 반환한다.
+그리고 아래와 같이 두 학생(s1,s2) 객체를 선언해서 같은 id를 설정했을 때를 보면, 서로 같은 id를 갖지만 결국 서로 다른 메모리를 참조하기 때문에 equals() 함수의 기본 구현에 의해 false를 반환한다.
 
 ```
 public class EqualTest {
@@ -136,7 +136,7 @@ public class HashTest {
 
 ## JPA 엔티티를 사용할 때 주의할 점
 
-ORM을 사용할 때는 hashCode()와 equals()에서 항상 **getter 메서드를 사용**하고, **필드 참조는 사용하면 안된다.** 이유는 ORM에서는 필드가 지연 로딩이 될 수 있으며, getter 메서드를 호출하기 전까지는 해당 값을 사용할 수 없기 때문이다.
+ORM을 사용할 때, hashCode()와 equals()를 오버라이딩 한다면 항상 **getter 메서드를 사용**하고, **필드 참조는 사용하면 안된다.** 이유는 ORM에서는 필드가 지연 로딩이 될 수 있으며, getter 메서드를 호출하기 전까지는 해당 값을 사용할 수 없기 때문에 동등성 판단이 깨질 수 있다.
 
 예를 들어 Employee 클래스에서 e1.phone_number = e2.phone_number로 비교한다면, phone_number 필드가 지연 로딩 상태일 수 있다. 그렇다면 phone_number는 null일 수 있고, 버그가 발생할 수 있다.
 
